@@ -1,21 +1,20 @@
 import cv2
 import numpy as np
+import helper as helper
 
-def  shiftimage(image,shift):
-    for i in range(image.shape[1] -1, image.shape[1] - shift, -1):
-        image = np.roll(image, -1, axis=1)
-        image[:, -1] = 0
-        return image
 
 
 path="D:/0WORK/opencv/"
 img = cv2.imread(path+'pic1_a.png')
 image= cv2.imread(path+'pic1_a.png')
 
+helper.myFast(img, image)
+
 image=cv2.blur(image,(5,5))
 image=cv2.blur(image,(5,5))
+
 for i in range(0,1,1):
-    image=image-shiftimage(image,2)
+    image=image-helper.shiftimage(image,2)
     image=cv2.blur(image,(2,2))
 
 # image=shiftimage(image,2)
