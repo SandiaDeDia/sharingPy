@@ -3,7 +3,7 @@ import numpy as np
 
 
 def sharpen(my_image):
-    if is_grayscale(my_image):
+    if cv.is_grayscale(my_image):
         height, width = my_image.shape
     else:
         my_image = cv.cvtColor(my_image, cv.CV_8U)
@@ -12,16 +12,16 @@ def sharpen(my_image):
     
     for j in range(1, height - 1):
         for i in range(1, width - 1):
-            if is_grayscale(my_image):
+            if cv.is_grayscale(my_image):
                 sum_value = 5 * my_image[j, i] - my_image[j + 1, i] - my_image[j - 1, i] \
                             - my_image[j, i + 1] - my_image[j, i - 1]
-                result[j, i] = saturated(sum_value)
+                result[j, i] =cv.saturated(sum_value)
             else:
                 for k in range(0, n_channels):
                     sum_value = 5 * my_image[j, i, k] - my_image[j + 1, i, k]  \
                                 - my_image[j - 1, i, k] - my_image[j, i + 1, k]\
                                 - my_image[j, i - 1, k]
-                    result[j, i, k] = saturated(sum_value)
+                    result[j, i, k] = cv.saturated(sum_value)
     
     return result
 
@@ -48,7 +48,9 @@ def myFast(img,img2):
     print( "neighborhood: {}".format(fast.getType()) )
     print( "Total Keypoints with nonmaxSuppression: {}".format(len(kp)) )
     cv.imwrite('fast_true.png',img2)
+    
     # Disable nonmaxSuppression
+    
     fast.setNonmaxSuppression(0)
     kp = fast.detect(img,None)
     print( "Total Keypoints without nonmaxSuppression: {}".format(len(kp)) )
